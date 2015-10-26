@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Python Programming Tutorials</title>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.css">
+	
+	<link rel="stylesheet" href="{{ url_for('static', filename='js/editor/doc_brython.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='js/editor/console.css') }}">
+
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/brython_builtins.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/version_info.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/identifiers_re.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py2js.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_object.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_type.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_utils.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_generator.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_builtin_functions.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_bytes.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_set.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/js_objects.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/stdlib_paths.js') }}"></script>
+
+
+	<script src="{{ url_for('static', filename='js/editor/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ url_for('static', filename='js/editor/ext-language_tools.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ url_for('static', filename='js/editor/mode-python3.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ url_for('static', filename='js/editor/python.js') }}" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="{{ url_for('static', filename='js/editor/brython_dist.js') }}"></script>-->
+	<script src="{{ url_for('static', filename='js/editor/brython_dist.js') }}"></script>
+
+	<script type="text/python3" src="{{ url_for('static', filename='editor.py') }}"></script>
+
+	<script type="text/python3">
+	from browser import document as doc
+	from browser import html
+	import header
+
+	qs_lang,language = header.show('../')
+
+	# other translations
+
+	trans = {
+		'report_bugs':{'en':'Please report bugs in the ',
+					   'es':'Poner los bugs en el ',
+					   'fr':"Signalez les bugs dans l'"},
+		'test_page':{'en':'Tests page','es':'P&aacute;gina de pruebas','fr':'Page de tests'},
+		'run':{'en':'run','es':'ejecutar','fr':'ex?cuter'},
+		'clear':{'en':'clear','es':'borrar','fr':'effacer'}
+	}
+
+	for key in trans:
+		if key in doc:
+			doc[key].html = trans[key].get(language,trans[key]['en'])
+
+	# link to test page
+
+	if qs_lang:
+		tplink.href += '?lang=%s' %qs_lang
+
+	def set_debug(ev):
+		pass
+
+
+
+	# bindings
+
+
+
+	# next functions are defined in editor.py
+
+	doc['run'].bind('click',run)
+
+
+	# erase "main" div
+	def clear_main(ev):
+		doc['main'].text = ''
+
+	main_content = 'Zone with id="main" ; use it to test interaction with DOM elements'
+
+	# add "main" div
+	def add_main(ev):
+		global main_content
+		try:
+			# if "main" div already exists, save content and erase container
+			main_content = doc["main"].html
+			doc["main_container"].html = ""
+			doc["add_main"].text = 'Show "main" div'
+		except KeyError:
+			t = html.TABLE()
+			row = html.TR()
+			b = html.BUTTON('Clear')
+			b.bind('click', clear_main)
+			row <= html.TD(b)+html.TD(html.DIV(Id="main"))
+			t <= row
+			doc["main_container"] <= t
+			doc["main"].html = main_content
+			doc["add_main"].text = 'Hide "main" div'
+
+
+
+	</script>
+
+	<script>
+	function run_js(){
+		var cons = document.getElementById("console")
+		var jscode = cons.value
+		var t0 = (new Date()).getTime()
+		eval(jscode)
+		var t1 = (new Date()).getTime()
+		console.log("Javascript code run in "+(t1-t0)+" ms")
+	}
+	</script>
+	
+	
+
+	
+	
+	
+	
+	
+</head>
+
+<header>
+  <div class="navbar-header">
+    <a class="navbar-brand" rel="home" href="/" title="Python Programming Tutorials ">
+        <img style="max-width:120px; margin-top: -7px;" src="{{ url_for('static', filename='images/mainlogo.png') }}">
+    </a>
+  </div>
+
+  <div class="container-fluid">
+
+		
+
+	<ul class="nav nav-pills">
+	<a href="/dashboard/"><button type="button" class="btn btn-primary" style=" margin-top: 5px; margin-bottom: 5px; height:44px; margin-right: 15px">
+			<span class="glyphicon glyphicon-off"></span> Start Learning
+		</button></a>
+
+
+		  <ul class="nav navbar-nav navbar-right">
+		  {% if session.logged_in %}
+			<div style="margin-right: 10px; margin-left: 15px;  margin-top: 5px; margin-bottom: 5px;" class="container-fluid">
+			<h5><a href="/support-donate/"> <span class="glyphicon glyphicon-heart"></span> Support&nbsp;&nbsp;&nbsp;</a>
+			<a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></h5>
+			</div>
+		  {% else %}
+		  <div style="margin-right: 10px; margin-left: 15px; margin-top: 5px; margin-bottom: 5px;"  class="container-fluid">
+			<h5>
+			<a href="/support-donate/"> <span class="glyphicon glyphicon-heart"></span> Support&nbsp;&nbsp;&nbsp;</a>
+			<a role="presentation" class="active" data-toggle="modal" data-target="#exampleModal" href="#"><span class="glyphicon glyphicon-log-in"></span> Login&nbsp;&nbsp;&nbsp;</a>
+			
+			
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="exampleModalLabel">Login</h4>
+				  </div>
+				  <div class="modal-body">
+					  <div class="container-fluid">
+						  <form action="" class="form-inline" method="post">
+							<input type="text" class="form-control" placeholder="Username" name="username" value="{{
+							  request.form.username }}">
+							 <input type="password" class="form-control" placeholder="Password" name="password" value="{{
+							  request.form.password }}">
+							<input class="btn btn-primary" type="submit" value="Login">
+						  </form>
+						  {% if error %}
+							<p class="error"><strong>Error:</strong> {{ error }}</p>
+						  {% endif %}
+							<div class="container">
+							<br>
+						   <p>No account? <a href='/register'>Register here</a>.</p>
+						   <br>
+							{% for paragraph in Body_info %}
+							<p>{{ paragraph }}</p>
+							{% endfor %}
+						  </div>
+					</div>
+				  </div>
+
+				</div>
+			  </div>
+			</div>
+			
+		
+		
+
+		<a role="presentation" class="active" data-toggle="modal" data-target="#register" href="#"><span class="glyphicon glyphicon-pencil"></span> Sign up</a><h5>
+		<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="exampleModalLabel">Register</h4>
+			  </div>
+			  <div class="modal-body">
+				  <div class="container">
+					  {% from "_formhelpers.html" import render_field %}
+						<form method=post action="/register">
+						  <dl>
+							{{ render_field(form.username) }}
+							{{ render_field(form.email) }}
+							{{ render_field(form.password) }}
+							{{ render_field(form.confirm) }}
+							{{ render_field(form.accept_tos) }}
+						  </dl>
+						  <p><input type=submit value=Register>
+						</form>
+					  {% if error %}
+						<p class="error"><strong>Error:</strong> {{ error }}</p>
+					  {% endif %}
+				</div>
+			  </div>
+
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  {% endif %}
+      </ul>
+	  
+	  
+	  
+	  
+	</ul>
+  </div>
+</header>
+	
+	
+<body>
+<div class="border-row" style="width:100%; margin-bottom: 15px;"> </div>
+
+	<!-- Flashed messages and actual body content -->
+	
+	<div class="container" align="center" style="height:80%">
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+			{% for message in messages %}
+			<div class="row">
+				<div class="col-md-4">
+				  <div class="alert alert-warning alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  {{ message }}
+				  </div>
+				</div>
+			</div>
+			{% endfor %}
+		  {% endif %}
+		{% endwith %}
+		
+		
+		
+		<a href="/dashboard/">
+		<video autoplay="autoplay" muted="muted" poster="{{ url_for('static', filename='videos/python-programming-tutorials-main.png') }}" style="width:100%; max-height:80%" >
+		<source src="{{ url_for('static', filename='videos/python-programming-tutorials-main.mp4') }}" type="video/mp4" type="video/mp4">
+		<source src="{{ url_for('static', filename='videos/python-programming-tutorials-main.webm') }}" type="video/webm">
+		</video>
+		</a>
+		
+		
+		
+	</div>
+	<div class="container-fluid" align="center" style="height:20%">
+	<a href="#two"><img style="height: 10%;max-height:80px; position: absolute; bottom: 0;" src="{{ url_for('static', filename='images/scrolldownarrow.png') }}"></a>
+	</div>
+	
+	<div id="two" class="border-row" style="width:100%; margin-bottom: 10px;"> </div>
+	<body onload="brython({debug:1, cache:'version'})">
+	
+		<div class="container" style="height:95%; max-width:1145px" >
+
+			<center>
+			<button type="button" class="btn btn-success" id="run" style=" margin-top: 5px; margin-bottom: 5px; height:44px; margin-right: 15px"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Run</button><a href="/dashboard/"><button type="button" class="btn btn-primary" style=" margin-top: 5px; margin-bottom: 5px; height:44px; margin-right: 15px">
+			<span class="glyphicon glyphicon-off"></span> Start Learning
+		</button></a></center>
+			
+			<table id="banner" cellpadding=0 cellspacing=0>
+			<tr id="banner_row">
+			
+			</tr>
+			</table>
+			
+
+
+
+			<div id="container" style="max-height:80%">
+			<div id="left-div">
+			<div style="padding: 3px 3px 3px 3px;">
+			
+			
+			</div>
+			  <div id="editor" style="width:100%;"></div>
+			</div>
+
+			<div id="right-div">
+			<div style="padding: 3px 3px 3px 3px;">
+
+
+
+			</div>
+			<div style="width:100%;height:100%;">
+			<textarea id="console"></textarea>
+
+			</div>
+			<p style="font-size:65%">Python 3 embedded console using <a href="http://brython.info/" target="_blank">Brython</a></p>
+			</div>
+			
+			
+			</div>
+
+		</div>
+
+		
+	</body><br>
+	
+	
+
+		
+	
+
+	
+
+	<!-- js inclues -->
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+	
+	<!-- Google Tracking -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-51891827-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+
+	<script>
+		$(function() {
+		  $('a[href*=#]:not([href=#])').click(function() {
+			if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+			  var target = $(this.hash);
+			  target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+			  if (target.length) {
+				$('html,body').animate({
+				  scrollTop: target.offset().top
+				}, 1000);
+				return false;
+			  }
+			}
+		  });
+		});
+	</script>
+
+</body>	
+
+
+	<footer id="footer" style="background-color: #ececec">
+		<div class="border-row" style="width:100%; margin-bottom: 15px;"> </div>
+		<div class="row">
+		  <div class="col-md-2">
+				<ul style="list-style-type: none;">
+						<li><strong>About</strong></li>
+						<li><a href="/about">Mission</a></li>
+						<li><a href="/about/super-powers/">What Python means to me</a></li>
+
+						<li><a href="/about/technology/">Technology</a></li>
+						<li><a href="/contact/">Contact</a></li>
+						<li><a href="/support-donate/">Support this Website!</a></li>
+						<li>&copy; 2015 Python Programming.</li>
+						
+				</ul>
+		  </div>
+
+		  <div class="col-md-1"> </div>
+		  <div class="col-md-2">
+			<ul style="list-style-type: none;">
+		  
+						<li><strong>Social</strong></li>
+						<!--<li><a href="/blog">Blog</a></li>-->
+						<li><a href="https://twitter.com/sentdex" target="_blank">Twitter</a></li>
+						<li><a href="http://www.youtube.com/user/sentdex?sub_confirmation=1" target="_blank">YouTube</a></li>
+						<li><a href="https://plus.google.com/+sentdex" target="_blank">Google+</a></li>
+
+			</ul>
+		  </div>
+		  
+		  <div class="col-md-1"> </div>
+		  <div class="col-md-2"><ul style="list-style-type: none;">
+					<li><strong>Legal</strong></li>
+					<li><span><a href="/about/tos">Terms of Use</a></span></li>
+					<li><span><a href="/about/privacy-policy">Privacy Notice (updated Jan 22, 2015)</a></span></li>
+					
+				</ul></div>
+		</div>
+
+		</div>
+
+	</footer>
+
+</html>
+

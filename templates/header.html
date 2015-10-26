@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Python Programming Tutorials</title>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='js/editor/doc_brython.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='js/editor/console.css') }}">
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/brython_builtins.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/version_info.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/identifiers_re.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py2js.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_object.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_type.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_utils.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_generator.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_builtin_functions.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_bytes.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/py_set.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/js_objects.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor/stdlib_paths.js') }}"></script>
+
+
+	<script src="{{ url_for('static', filename='js/editor/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ url_for('static', filename='js/editor/ext-language_tools.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ url_for('static', filename='js/editor/mode-python3.js') }}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{ url_for('static', filename='js/editor/python.js') }}" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="{{ url_for('static', filename='js/editor/brython_dist.js') }}"></script>-->
+	<script src="{{ url_for('static', filename='js/editor/brython_dist.js') }}"></script>
+
+	<script type="text/python3" src="{{ url_for('static', filename='editor.py') }}"></script>
+
+	<script type="text/python3">
+	from browser import document as doc
+	from browser import html
+	import header
+
+	qs_lang,language = header.show('../')
+
+	# other translations
+
+	trans = {
+		'report_bugs':{'en':'Please report bugs in the ',
+					   'es':'Poner los bugs en el ',
+					   'fr':"Signalez les bugs dans l'"},
+		'test_page':{'en':'Tests page','es':'P&aacute;gina de pruebas','fr':'Page de tests'},
+		'run':{'en':'run','es':'ejecutar','fr':'ex?cuter'},
+		'clear':{'en':'clear','es':'borrar','fr':'effacer'}
+	}
+
+	for key in trans:
+		if key in doc:
+			doc[key].html = trans[key].get(language,trans[key]['en'])
+
+	# link to test page
+
+	if qs_lang:
+		tplink.href += '?lang=%s' %qs_lang
+
+	def set_debug(ev):
+		pass
+
+
+
+	# bindings
+
+
+
+	# next functions are defined in editor.py
+
+	doc['run'].bind('click',run)
+
+
+	# erase "main" div
+	def clear_main(ev):
+		doc['main'].text = ''
+
+	main_content = 'Zone with id="main" ; use it to test interaction with DOM elements'
+
+	# add "main" div
+	def add_main(ev):
+		global main_content
+		try:
+			# if "main" div already exists, save content and erase container
+			main_content = doc["main"].html
+			doc["main_container"].html = ""
+			doc["add_main"].text = 'Show "main" div'
+		except KeyError:
+			t = html.TABLE()
+			row = html.TR()
+			b = html.BUTTON('Clear')
+			b.bind('click', clear_main)
+			row <= html.TD(b)+html.TD(html.DIV(Id="main"))
+			t <= row
+			doc["main_container"] <= t
+			doc["main"].html = main_content
+			doc["add_main"].text = 'Hide "main" div'
+
+
+
+	</script>
+</head>
+
+<header>
+  <div class="navbar-header">
+    <a class="navbar-brand" rel="home" href="/" title="Python Programming Tutorials ">
+        <img style="max-width:120px; margin-top: -7px;" src="{{ url_for('static', filename='images/mainlogo.png') }}">
+    </a>
+  </div>
+
+  <div class="container-fluid">
+	<ul class="nav nav-pills">
+		<a href="/dashboard/"><button type="button" class="btn btn-primary" style=" margin-top: 5px; margin-bottom: 5px; height:44px; margin-right: 15px">
+			<span class="glyphicon glyphicon-off"></span> Start Learning
+		</button></a>
+      <ul class="nav navbar-nav navbar-right">
+	  {% if session.logged_in %}
+		<div style="margin-right: 10px; margin-left: 15px;  margin-top: 5px; margin-bottom: 5px;" class="container-fluid">
+		<h5><a href="/support-donate/"> <span class="glyphicon glyphicon-heart"></span> Support&nbsp;&nbsp;&nbsp;</a>
+		<a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></h5>
+		</div>
+	  {% else %}
+	  <div style="margin-right: 10px; margin-left: 15px; margin-top: 5px; margin-bottom: 5px;" class="container-fluid">
+		<h5><a href="/support-donate/"> <span class="glyphicon glyphicon-heart"></span> Support&nbsp;&nbsp;&nbsp;</a>
+		<a href="/login/"> <span class="glyphicon glyphicon-log-in"></span> Login</a>&nbsp;&nbsp;&nbsp;
+		<a href="/register/" ><span class="glyphicon glyphicon-pencil"></span> Sign up</a></h5>
+	  </div>
+	  {% endif %}
+      </ul>
+	</ul>
+  </div>
+</header>
+	
+	
+<body>
+	<div class="border-row" style="width:100%; margin-bottom: 15px;"> </div>
+	<!-- Flashed messages and actual body content -->
+	<div class="container-fluid" style="min-height:100%; margin-bottom: 100px;">
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+			{% for message in messages %}
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+			
+			{% if "type" in message %}
+				  <div class="alert alert-{{message[1]}} alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  {{ message[2] }}
+				  </div>
+			
+			{% else %}
+			
+				  <div class="alert alert-warning alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  {{ message }}
+				  </div>
+			{% endif %}
+				</div>
+			</div>
+			
+			{% endfor %}
+		  {% endif %}
+		{% endwith %}
+		
+
+		<!-- specific page content below -->
+		{% block body %}{% endblock %}
+		
+	</div>
+	
+
+	<!-- js inclues -->
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/dropdown.js') }}"></script>
+
+	
+	<!-- Google Tracking -->
+	<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-51891827-1', 'auto');
+		  ga('send', 'pageview');
+
+	</script>
+	
+	<script>
+		function goBack() {
+			window.history.back()
+		}
+	</script>
+	
+	
+	
+			<!--<script src="http://code.highcharts.com/highcharts.js"></script>
+			<script src="{{ url_for('static', filename='graph.js') }}"></script>-->
+	
+
+
+</body>	
+
+
+
+    <div class="footer-container" style="background-color: #ececec">
+	<footer id="footer">
+		<div class="border-row" style="width:100%; margin-bottom: 15px;"> </div>
+		<div class="row">
+		  <div class="col-md-2">
+				<ul style="list-style-type: none;">
+						<li><strong>About</strong></li>
+						<li><a href="/about">Mission</a></li>
+						<li><a href="/about/super-powers">What Python means to me</a></li>
+						<li><a href="/about/technology">Technology</a></li>
+						<li><a href="/contact">Contact</a></li>
+						<li><a href="/support-donate">Support / Donate</a></li>
+						<li>&copy; 2015 Python Programming.</li>
+						
+				</ul>
+				
+		  </div>
+
+		  <div class="col-md-1"> </div>
+		  <div class="col-md-2">
+			<ul style="list-style-type: none;">
+		  
+						<li><strong>Social</strong></li>
+						<!--<li><a href="/blog">Blog</a></li>-->
+						<li><a href="https://twitter.com/sentdex" target="_blank">Twitter</a></li>
+						<li><a href="http://www.youtube.com/user/sentdex?sub_confirmation=1" target="_blank">YouTube</a></li>
+						<li><a href="https://plus.google.com/+sentdex" target="_blank">Google+</a></li>
+
+			</ul>
+		  </div>
+		  
+		  <div class="col-md-1"> </div>
+		  <div class="col-md-2"><ul style="list-style-type: none;">
+					<li><strong>Legal</strong></li>
+					<li><span><a href="/about/tos">Terms of Use</a></span></li>
+					<li><span><a href="/about/privacy-policy">Privacy Notice (updated Jan 22, 2015)</a></span></li>
+					
+					
+				</ul>
+				</div>
+		</div>
+
+		</div>
+	
+	</footer>
+</html>
+

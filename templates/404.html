@@ -1,0 +1,41 @@
+{% extends "header.html" %}
+{% block body %}
+
+
+
+<body class="body">
+
+<!--<div class="list-group">
+  <a href="#" class="list-group-item active">
+    <h3 style="color:#FFF">Beginner to advanced Python tutorials, your way.</h3>
+
+  </a>
+</div>-->
+
+
+
+      <div class="container" align="left">
+	  <img src="{{ url_for('static', filename='images/404-snake.png') }}">
+	  
+	  </div>
+	  <div class="container" align="left">
+	  
+        <h4>Page Not Found</h4>
+        <p>The requested URL was not found on this server.</p>
+		
+		<p>PythonProgramming.net was just re-written, so maybe the URL path was not correctly transferred! You can try searching for it by going to the "start learning" button and browsing.</p>
+		
+		<p>This error has been logged and will be reviewed. Feel free to contact HSKinsley@gmail.com if you want the proper link.</p>
+        <p><a class="btn btn-primary btn-lg" onclick="goBack()" role="button">Go Back!</a></p>
+		
+      </div>
+	  
+	  
+
+
+	
+
+	
+</body>
+{% endblock %}
+

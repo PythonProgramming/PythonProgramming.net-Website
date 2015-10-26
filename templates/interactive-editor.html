@@ -1,0 +1,302 @@
+{% extends "header.html" %}
+{% block body %}
+
+<script type="text/python3">
+import sys
+import time
+import traceback
+import dis
+
+from browser import document as doc, window,alert
+from javascript import JSObject
+
+# set height of container to 66% of screen
+_height = doc.documentElement.clientHeight
+_s = doc['container']
+_s.style.height = '%spx' % int(_height*0.66)
+
+#editor_value = "#Press the Run Button!\n\nprint('Welcome to Python Programming.net!')\nprint('See how easy it is to program.')\n\n# This is a 'for loop':\nfor each_number in range(4):\n    print(each_number)\n\nprint('You just ran a Python program!')\nprint('Try playing with the editor values, like changing the range or print functions, or get started by clicking on the Start Learning button.')"
+
+editor_value = "{{init_value}}"
+
+
+
+
+has_ace = True
+try:
+    editor = window.ace.edit("editor")
+    session = editor.getSession()
+    
+
+    editor.setOptions({
+     'enableLiveAutocompletion': True,
+     'enableSnippets': True,
+     'highlightActiveLine': False,
+     'highlightSelectedWord': True
+    })
+except:
+    from browser import html
+    editor = html.TEXTAREA(rows=20,cols=70)
+    doc["editor"] <= editor
+    def get_value(): return editor.value
+    def set_value(x):editor.value=x
+    editor.getValue = get_value
+    editor.setValue = set_value
+    has_ace = False
+
+if sys.has_local_storage:
+    from browser.local_storage import storage
+else:
+    storage = None
+
+if 'set_debug' in doc:
+    __BRYTHON__.debug = int(doc['set_debug'].checked)
+
+def reset_src():
+    editor.setValue(editor_value)
+
+    editor.scrollToRow(0)
+    editor.gotoLine(0)
+
+def reset_src_area():
+    if storage and "py_src" in storage:
+       editor.value = storage["py_src"]
+    else:
+       editor.value = editor_value
+
+class cOutput:
+    
+    def write(self, data):
+        doc["console"].value += str(data)
+
+    def flush(self):
+        pass
+
+sys.stdout = cOutput()
+sys.stderr = cOutput()
+
+def to_str(xx):
+    return str(xx)
+
+info = sys.implementation.version
+#doc['version'].text = '%s.%s.%s' %(info.major,info.minor,info.micro)
+
+output = ''
+
+def show_console(ev):
+    doc["console"].value = output
+    doc["console"].cols = 60
+
+def run(in_globals=False):
+    global output
+    doc["console"].value=''
+    src = editor.getValue()
+    if storage is not None:
+       storage["py_src"]=src
+
+    t0 = time.perf_counter()
+    try:
+        if(in_globals):
+            exec(src)
+        else:
+            ns = {}
+            exec(src,ns)
+        state = 1
+    except Exception as exc:
+        traceback.print_exc(file=sys.stderr)
+        state = 0
+    output = doc["console"].value
+
+    print('<PythonProgramming.net>')
+    return state
+
+# load a Python script
+def load_script(evt):
+    _name=evt.target.value+'?foo=%s' %time.time()
+    editor.setValue(open(_name).read())
+
+def show_js(ev):
+    src = editor.getValue()
+    doc["console"].value = dis.dis(src)
+
+if has_ace:
+    reset_src()
+else:
+    reset_src_area()
+
+</script>
+
+<script type="text/python3">
+from browser import document as doc
+from browser import html
+import header
+
+qs_lang,language = header.show('../')
+
+# other translations
+
+trans = {
+    'report_bugs':{'en':'Please report bugs in the ',
+                   'es':'Poner los bugs en el ',
+                   'fr':"Signalez les bugs dans l'"},
+    'test_page':{'en':'Tests page','es':'P&aacute;gina de pruebas','fr':'Page de tests'},
+    'run':{'en':'run','es':'ejecutar','fr':'ex?cuter'},
+    'clear':{'en':'clear','es':'borrar','fr':'effacer'}
+}
+
+for key in trans:
+    if key in doc:
+        doc[key].html = trans[key].get(language,trans[key]['en'])
+
+# link to test page
+
+if qs_lang:
+    tplink.href += '?lang=%s' %qs_lang
+
+def set_debug(ev):
+    pass
+
+
+
+# bindings
+
+
+
+# next functions are defined in editor.py
+
+doc['run'].bind('click',run)
+
+# erase "main" div
+def clear_main(ev):
+    doc['main'].text = ''
+
+main_content = 'Zone with id="main" ; use it to test interaction with DOM elements'
+
+# add "main" div
+def add_main(ev):
+    global main_content
+    try:
+        # if "main" div already exists, save content and erase container
+        main_content = doc["main"].html
+        doc["main_container"].html = ""
+        doc["add_main"].text = 'Show "main" div'
+    except KeyError:
+        t = html.TABLE()
+        row = html.TR()
+        b = html.BUTTON('Clear')
+        b.bind('click', clear_main)
+        row <= html.TD(b)+html.TD(html.DIV(Id="main"))
+        t <= row
+        doc["main_container"] <= t
+        doc["main"].html = main_content
+        doc["add_main"].text = 'Hide "main" div'
+
+
+
+</script>
+
+<script>
+function run_js(){
+    var cons = document.getElementById("console")
+    var jscode = cons.value
+    var t0 = (new Date()).getTime()
+    eval(jscode)
+    var t1 = (new Date()).getTime()
+    console.log("Javascript code run in "+(t1-t0)+" ms")
+}
+</script>
+</head>
+
+  
+<body onload="brython({debug:1, cache:'version'})">
+	
+		<div class="container" style="height:95%; max-width:1145px" >
+		
+		<div class="panel panel-primary" style=" margin-left: 30px;">
+		  <div class="panel-heading">
+			<h3 class="panel-title">{{title}}</h3>
+		  </div>
+		  <div class="panel-body">
+			{% for b in body_info %}
+			<p>{{b}}</p>
+			{% endfor %}
+		  </div>
+  
+		</div>
+		{% for h in hints %}
+
+
+				<div class="alert alert-info alert-dismissible" role="alert" style=" margin-left: 30px;">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  {{ h }}
+				  </div>
+
+		{% endfor %}
+
+
+			<div class="dropdown" align="left">
+		
+		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style=" margin-left: 30px; margin-top: 5px; margin-bottom: 5px; height:44px; margin-right: 15px">
+			<span class="glyphicon glyphicon-flash"></span> Interactive Topics <span class="caret"></span>
+		</button>
+		  <ul class="dropdown-menu multi-level" role="menu">
+			<li class="dropdown-submenu">
+                <a tabindex="-1">Basics</a>
+                <ul class="dropdown-menu">
+                  <li><a tabindex="-1" href="?topic=Basics&part=1&attempts=0&submitted=null">Print and Strings</a></li>
+				  <li><a tabindex="-1" href="?topic=Basics&part=2&attempts=0&submitted=null">Math with Python</a></li>
+				  <li><a tabindex="-1" href="?topic=Basics&part=3&attempts=0&submitted=null">While Loop</a></li>
+				  <li><a tabindex="-1" href="?topic=Basics&part=4&attempts=0&submitted=null">For Loop</a></li>
+				  <li><a tabindex="-1" href="?topic=Basics&part=5&attempts=0&submitted=null">If Statement</a></li>
+                </ul>
+              </li>
+		  </ul><button type="button" align="right" class="btn btn-success" id="run" style=" margin-top: 5px; margin-bottom: 5px; height:44px; margin-right: 15px"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Run</button></div>
+			
+		
+
+			
+
+			
+			<table id="banner" cellpadding=0 cellspacing=0>
+			<tr id="banner_row">
+			
+			</tr>
+			</table>
+			
+
+
+
+			<div id="container" style="max-height:80%">
+			<div id="left-div">
+			<div style="padding: 3px 3px 3px 3px;">
+			
+			
+			</div>
+			  <div id="editor" style="width:100%;"></div>
+			</div>
+
+			<div id="right-div">
+			<div style="padding: 3px 3px 3px 3px;">
+
+
+
+			</div>
+			<div style="width:100%;height:100%;">
+			<textarea id="console"></textarea>
+
+			</div>
+			<p style="font-size:65%">Python 3 embedded console using <a href="http://brython.info/" target="_blank">Brython</a></p>
+			</div>
+			
+			
+			</div>
+
+		</div>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+
+		
+		
+</body>
+{% endblock %}

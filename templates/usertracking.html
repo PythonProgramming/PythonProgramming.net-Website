@@ -1,0 +1,40 @@
+{% extends "header.html" %}
+{% block body %}
+
+<body class = "body">
+
+
+
+	<body>	
+		<div id={{ chartID|safe }} class="chart" style="height: 500px"></div>
+		<script>
+			var chart_id = {{ chartID|safe }}
+			var series = {{ series|safe }}
+			var colors = ['#183A54','#00A3E0', '#ff9819', '#90ed7d', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1', '#7cb5ec', '#434348']
+			var title = {{ title|safe }}
+			var xAxis = {{ xAxis|safe }}
+			var yAxis = {{ yAxis|safe }}
+			var chart = {{ chart|safe }}
+			
+			
+			
+		</script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+			
+	</body>
+</body>
+
+
+
+</html>
+
+{% endblock %}

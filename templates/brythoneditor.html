@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Brython Editor</title>
+<link rel="stylesheet" href="http://brython.info/doc/doc_brython.css">
+<link rel="stylesheet" href="http://brython.info/tests/console.css">
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
+<script type="text/javascript" src="http://brython.info/src/brython_builtins.js"></script>
+<script type="text/javascript" src="http://brython.info/src/version_info.js"></script>
+<script type="text/javascript" src="http://brython.info/src/identifiers_re.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py2js.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_object.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_type.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_utils.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_generator.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_builtin_functions.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_bytes.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_set.js"></script>
+<script type="text/javascript" src="http://brython.info/src/js_objects.js"></script>
+<script type="text/javascript" src="http://brython.info/src/stdlib_paths.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_import.js"></script>
+
+<script type="text/javascript" src="http://brython.info/src/py_string.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_int.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_float.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_complex.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_dict.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_list.js"></script>
+<script type="text/javascript" src="http://brython.info/src/py_dom.js"></script>
+
+<script type="text/javascript" src="http://brython.info/src/py_VFS.js"></script>
+
+<script src="http://brython.info/tests/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://brython.info/tests/ace/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://brython.info/tests/ace/mode-python3.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://brython.info/tests/ace/snippets/python.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+<script src="http://brython.info/src/brython_dist.js"></script>
+
+<script type="text/python3" src="{{ url_for('static', filename='editor.py') }}"></script>
+
+<script type="text/python3">
+from browser import document as doc
+from browser import html
+import header
+
+qs_lang,language = header.show('../')
+
+# other translations
+
+trans = {
+    'report_bugs':{'en':'Please report bugs in the ',
+                   'es':'Poner los bugs en el ',
+                   'fr':"Signalez les bugs dans l'"},
+    'test_page':{'en':'Tests page','es':'P&aacute;gina de pruebas','fr':'Page de tests'},
+    'run':{'en':'run','es':'ejecutar','fr':'ex?cuter'},
+    'clear':{'en':'clear','es':'borrar','fr':'effacer'}
+}
+
+for key in trans:
+    if key in doc:
+        doc[key].html = trans[key].get(language,trans[key]['en'])
+
+# link to test page
+
+if qs_lang:
+    tplink.href += '?lang=%s' %qs_lang
+
+def set_debug(ev):
+    pass
+
+
+
+# bindings
+
+
+
+# next functions are defined in editor.py
+
+doc['run'].bind('click',run)
+
+
+# erase "main" div
+def clear_main(ev):
+    doc['main'].text = ''
+
+main_content = 'Zone with id="main" ; use it to test interaction with DOM elements'
+
+# add "main" div
+def add_main(ev):
+    global main_content
+    try:
+        # if "main" div already exists, save content and erase container
+        main_content = doc["main"].html
+        doc["main_container"].html = ""
+        doc["add_main"].text = 'Show "main" div'
+    except KeyError:
+        t = html.TABLE()
+        row = html.TR()
+        b = html.BUTTON('Clear')
+        b.bind('click', clear_main)
+        row <= html.TD(b)+html.TD(html.DIV(Id="main"))
+        t <= row
+        doc["main_container"] <= t
+        doc["main"].html = main_content
+        doc["add_main"].text = 'Hide "main" div'
+
+
+
+</script>
+
+<script>
+function run_js(){
+    var cons = document.getElementById("console")
+    var jscode = cons.value
+    var t0 = (new Date()).getTime()
+    eval(jscode)
+    var t1 = (new Date()).getTime()
+    console.log("Javascript code run in "+(t1-t0)+" ms")
+}
+</script>
+</head>
+<body onload="brython({debug:1, cache:'version'})">
+
+<table id="banner" cellpadding=0 cellspacing=0>
+<tr id="banner_row">
+</tr>
+</table>
+
+
+<div id="container-fluid">
+<div id="container">
+<div id="left-div">
+<div style="padding: 3px 3px 3px 3px;">
+<button type="button" class="btn btn-success" id="run"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Run</button>
+
+</div>
+  <div id="editor"></div>
+</div>
+
+<div id="right-div">
+<div style="padding: 3px 3px 3px 3px;">
+  <div style="float:left">
+	<h4><span class="label label-default">Output:</span></h4>
+  </div>
+
+
+</div>
+<div style="width:100%;height:100%;">
+<textarea id="console"></textarea>
+<div id="footer"><p style="font-size:75%">Python 3 editor created with <a href="http://brython.info/" target="_blank">Brython</a></p></div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1179 @@
+{% extends "header.html" %}
+{% block body %}
+
+
+<div class="container">
+<body class="body">
+
+
+<div role="tabpanel">
+
+  <!-- Dashboard Navigation Tabs tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a href="#basics" aria-controls="basics" role="tab" data-toggle="tab">Basics</a></li>
+    <!--<li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>-->
+    <li role="presentation"><a href="#games" aria-controls="games" role="tab" data-toggle="tab">Game Dev</a></li>
+    <li role="presentation"><a href="#webdev" aria-controls="webdev" role="tab" data-toggle="tab">Web Dev</a></li>
+	<li role="presentation"><a href="#dataanalysis" aria-controls="dataanalysis" role="tab" data-toggle="tab">Data Analysis</a></li>
+	<li role="presentation"><a href="#finance" aria-controls="finance" role="tab" data-toggle="tab">Finance</a></li>
+	<li role="presentation"><a href="#hardware" aria-controls="hardware" role="tab" data-toggle="tab">Robotics</a></li>
+	<li role="presentation"><a href="#guis" aria-controls="guis" role="tab" data-toggle="tab">GUIs</a></li>
+
+  </ul>
+
+  <!-- Begin Tab panes -->
+  <div class="tab-content">
+  
+  
+  <!-- BEGIN OVERVIEW TAB -->
+    <div role="tabpanel" class="tab-pane fade" id="home">
+		<br>
+		<p>Welcome to your dashboard. Here, you can track your progress, set goals, and figure out where to go next.</p>
+		<br>
+		<div class="panel panel-default">
+		  <div class="panel-body">
+		  <p>Recent progress: <strong>Basics</strong></p>
+			<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Basics']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Basics']}}%;">
+				Basics Progress:  {{completed_percentages['Basics']}}%
+			</div>
+		  </div>
+		  <div class="panel-footer">
+		  
+		  Going through all of the basics well best equip you to handle the largest array of problems that you may face, as well as helping you to pick up new topics along the way.</div>
+		</div>
+		
+		
+		<div class="panel panel-default">
+		  <div class="panel-body">
+		  <p>Content Suggestions:</p>
+		  </div>
+		  <div class="panel-footer">
+		   		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+				  Robotics
+					</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">Robotics</h4>
+						  </div>
+						  <div class="modal-body">
+							Learn how to take your knowledge of controlling the digital world and apply it to controlling the physical world!
+						  </div>
+						  <div class="modal-footer">
+						  
+							
+							<button type="button" class="btn btn-primary">Start on this topic!</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Maybe Later.</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Not interested in this topic.</button>
+							
+						  </div>
+						</div>
+					  </div>
+					</div>
+		  </div>
+		</div>
+
+		
+	</div>
+<!-- END OVERVIEW TAB -->
+	
+<!-- BEGIN BASICS TAB -->
+	
+    <div role="tabpanel"class="tab-pane fade in active" id="basics">
+		<br>
+		<div class="progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Basics']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Basics']}}%;">
+				{{completed_percentages['Basics']}}%
+			</div>
+		</div>
+		<img class="img-responsive" src="{{ url_for('static', filename='images/python-3-basics.png') }}"/>
+		<h4>Basics</h4>
+		<p>Going through all of the basics well best equip you to handle the largest array of problems that you may face, as well as helping you to pick up new topics along the way.</p>
+
+		<div class="row">
+		  <div class="col-md-5"><div class="list-group">
+		  <p><kbd data-toggle="collapse" data-target="#basicreqs" aria-expanded="false" aria-controls="basicreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+				<div class="collapse" id="basicreqs">
+				  <div class="well">
+					<p>The willingness to ask questions.</p>
+				  </div>
+				</div>
+
+			{%for infos in topics['Basics']%}
+				{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+				{% else %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+				{% endif %}
+			{%endfor%}
+		
+
+		</div></div>
+		</div>
+	</div>
+<!-- END BASICS TAB -->	
+
+
+
+
+
+	
+<!-- BEGIN GAME DEV TAB -->		
+    <div role="tabpanel" class="tab-pane fade" id="games">
+		<br>
+		
+		<p>The Game Dev tutorials are mainly aimed at teaching you the basics of game development with Python.</p>
+		
+		<p><a href="http://pygame.org/news.html" target="blank"><strong>PyGame</strong></a> is a mostly-2D game development library.</p>
+		
+		<p><a href="http://pyopengl.sourceforge.net/" target="blank"><strong>PyOpenGL</strong></a> is a Python binding to the <a href="https://www.opengl.org/">OpenGL</a> library. OpenGL is used for higher performance and 3D graphics.</p> 
+		
+		<p><a href="http://kivy.org/#home" target="blank"><strong>Kivy</strong></a> is a cross-platform, open-source, application development framework that works on Windows, Linux, OS X, Android, and iOS.</p> 
+		
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#pygame" aria-controls="pygame" role="tab" data-toggle="tab">PyGame</a></li>
+			<li role="presentation"><a href="#pyopengl" aria-controls="pyopengl" role="tab" data-toggle="tab">PyOpenGL</a></li>
+			<li role="presentation"><a href="#kivy" aria-controls="kivy" role="tab" data-toggle="tab">Kivy</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="pygame">
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['PyGame']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['PyGame']}}%;">
+					{{completed_percentages['PyGame']}}%
+				</div>
+			</div>
+			<br>
+			<img style="width: 90%" src="{{ url_for('static', filename='videos/pygame-tutorials.png') }}"/>
+			<div class="row">
+			  <div class="col-md-5"><div class="list-group">
+			  <p><kbd data-toggle="collapse" data-target="#pygamereqs" aria-expanded="false" aria-controls="pygamereqs">Suggested Requirements for this series</kbd></p>
+				<div class="collapse" id="pygamereqs">
+				  <div class="well">
+					<p>You may wish to be familiar with the basics of the Python 3 programming language, or at least the basics of Programming in general</p>
+					<p>That said, this course begins at a slowish pace, and I do my best to explain everything at least the first time it shows up. PyGame can actually be a wonderful starting place for your journey in Python.</p>
+					<p>Don't be afraid to ask questions!</p>
+				  </div>
+				</div>
+				{%for infos in topics['PyGame']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				{%endfor%}
+			</div></div>
+			</div>
+			</div>
+			
+			
+			
+			
+			
+			<div role="tabpanel" class="tab-pane fade" id="pyopengl">
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['PyOpenGL']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['PyOpenGL']}}%;">
+					{{completed_percentages['PyOpenGL']}}%
+				</div>
+			</div>
+			<br>
+			<img class="img-responsive" src="{{ url_for('static', filename='images/pyopengl/openGL-cube-with-Python-and-PyOpenGL-tutorial.gif') }}"/>
+			
+			<br>
+			<div class="row">
+			  <div class="col-md-5"><div class="list-group">
+			  <p><kbd data-toggle="collapse" data-target="#pyopenglreq" aria-expanded="false" aria-controls="pyopenglreq">Suggested Requirements for this series</kbd></p>
+				<div class="collapse" id="pyopenglreq">
+				  <div class="well">
+					<p>Basics of Python</p>
+					<p>Understanding of the basics of PyGame</p>
+				  </div>
+				</div>
+				{%for infos in topics['PyOpenGL']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				{%endfor%}
+
+			</div></div>
+			</div>
+			</div>
+			
+
+			<div role="tabpanel" class="tab-pane fade" id="kivy">
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Kivy']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Kivy']}}%;">
+					{{completed_percentages['Kivy']}}%
+				</div>
+			</div>
+			<br>
+			<img class="img-responsive" src="{{ url_for('static', filename='images/kivy/kivy-draw-application-tutorial.png') }}"/>
+			<p></p>
+			<br>
+			<div class="row">
+			  <div class="col-md-5"><div class="list-group">
+			 
+				{%for infos in topics['Kivy']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				{%endfor%}
+
+			</div></div>
+			</div>
+			</div>
+		  </div>
+
+		</div>
+	</div>
+<!-- END GAME DEV TAB -->
+
+
+
+
+		
+	
+	
+<!-- BEGIN WEB DEV TAB -->		
+	<div role="tabpanel" class="tab-pane fade" id="webdev">
+
+		<br>
+		<p><strong><a href="https://www.djangoproject.com/" target="blank">Django</a></strong> and <strong><a href="http://flask.pocoo.org/" target="blank">Flask</a></strong> are both very popular Web Frameworks for the Python Programming language. </p>
+		<br>
+
+		<button class="btn btn-primary" data-toggle="collapse" href="#djangovsflask" aria-expanded="false" aria-controls="djangovsflask">
+		  Flask vs Django? Which should you choose?
+		</button>
+		<div class="collapse" id="djangovsflask">
+		  <div class="well">
+			<p>Flask and Django solve the same problems. Flask is a bit looser and more open-ended. It allows for you to both do things simply, and also do things incorrectly.</p>
+			<p>Django is more "higher level" than Flask, meaning some things are simply not as easily customized. Django can be slightly more complex, as you're forced to understand Django in basically one way, yet you're more likely to do things the right way.</p>
+			<p>The best choice is to make an attempt at both, and see which suits you best.</p>
+		  </div>
+		</div>	
+
+
+		<button class="btn btn-primary" data-toggle="collapse" href="#pywebexamps" aria-expanded="false" aria-controls="pywebexamps">
+		  Examples of Django and Flask Websites
+		</button>
+		<div class="collapse" id="pywebexamps">
+		  <div class="well">
+			<p><strong>Flask Websites:</strong></p>
+			<ul>
+				<li><a href="/" target="blank">PythonProgramming.net</a> - This entire website is built with Flask!</li>
+				<li><a href="https://plug.dj/" target="blank">Plug.dj</a></li>
+			</ul>
+			
+			<p><strong>Django Websites:</strong></p>
+			<ul>
+				<li><a href="https://www.pinterest.com/" target="blank">Pintrest</a></li>
+				<li><a href="http://instagram.com/" target="blank">Instagram</a></li>
+			</ul>
+		  </div>
+		</div>	
+		
+		
+		
+		
+		
+
+		
+		<br>
+		<br>
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#flask" aria-controls="flask" role="tab" data-toggle="tab">Flask</a></li>
+			<li role="presentation"><a href="#django" aria-controls="django" role="tab" data-toggle="tab">Django</a></li>
+			<li role="presentation"><a href="#devmysql" aria-controls="devmysql" role="tab" data-toggle="tab">MySQL (Databases)</a></li>
+			<li role="presentation"><a href="#devsqlite" aria-controls="devsqlite" role="tab" data-toggle="tab">SQLite (Databases)</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+
+		  
+		 <div role="tabpanel" class="tab-pane fade in active" id="flask">
+			<br>
+
+			<div role="tabpanel">
+
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#practicalflask" aria-controls="practicalflask" role="tab" data-toggle="tab">Practical Flask: Building PythonProgramming.net</a></li>
+				<li role="presentation"><a href="#flaskbasics" aria-controls="flaskbasics" role="tab" data-toggle="tab">Short Flask Basics Series</a></li>
+
+			  </ul>
+
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="practicalflask">
+				<br>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Practical Flask Creating PythonProgrammingnet']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Practical Flask Creating PythonProgrammingnet']}}%;">
+											{{completed_percentages['Practical Flask Creating PythonProgrammingnet']}}%
+										</div>
+									</div>
+									<br>
+				<!--<img class="img-responsive" src="{{ url_for('static', filename='images/???.jpg') }}"/>-->
+				<br><br>
+				<div class="row">
+					<div class="col-md-5"><div class="list-group">
+						{%for infos in topics['Practical Flask Creating PythonProgrammingnet']%}
+							{% if infos[1] in tracking %}
+								<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+							{% else %}
+								<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+							{% endif %}
+						{%endfor%}
+
+
+						
+				</div></div>
+				</div>
+				
+				
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="flaskbasics">
+									<br>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Flask']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Flask']}}%;">
+											{{completed_percentages['Flask']}}%
+										</div>
+									</div>
+									<br>
+				<!--<img class="img-responsive" src="{{ url_for('static', filename='images/???.jpg') }}"/>-->
+				<br><br>
+				<div class="row">
+					<div class="col-md-5"><div class="list-group">
+						{%for infos in topics['Flask']%}
+							{% if infos[1] in tracking %}
+								<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+							{% else %}
+								<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+							{% endif %}
+						{%endfor%}
+					
+
+				</div></div>
+				</div>
+				</div>
+			  </div>
+			</div>
+		</div>
+			
+			
+			
+			
+			
+			
+			
+			<div role="tabpanel" class="tab-pane fade" id="django">	
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Django']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Django']}}%;">
+					{{completed_percentages['Django']}}%
+				</div>
+			</div>
+			<br>
+			  <div class="row">
+				  <div class="col-md-5"><div class="list-group">
+				  <p><kbd data-toggle="collapse" data-target="#djangoreqs" aria-expanded="false" aria-controls="djangoreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+					<div class="collapse" id="djangoreqs">
+					  <div class="well">
+						<p>Understand the basics of Python.</p>
+					  </div>
+					</div>
+				  {%for infos in topics['Django']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				  {%endfor%}
+				</div></div>
+			</div></div>
+			
+			
+			<div role="tabpanel" class="tab-pane fade" id="devmysql">	
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['MySQL']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['MySQL']}}%;">
+					{{completed_percentages['MySQL']}}%
+				</div>
+			</div>
+			<br>
+			  <div class="row">
+				  <div class="col-md-5"><div class="list-group">
+				  <p><kbd data-toggle="collapse" data-target="#mysqlreqs" aria-expanded="false" aria-controls="mysqlreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+					<div class="collapse" id="mysqlreqs">
+					  <div class="well">
+						<p>Understand the basics of Python.</p>
+					  </div>
+					</div>
+				  {%for infos in topics['MySQL']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				  {%endfor%}
+				</div></div>
+			</div></div>
+			
+			<div role="tabpanel" class="tab-pane fade" id="devsqlite">	
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['SQLite']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['SQLite']}}%;">
+					{{completed_percentages['SQLite']}}%
+				</div>
+			</div>
+			<br>
+			  <div class="row">
+				  <div class="col-md-5"><div class="list-group">
+				  <p><kbd data-toggle="collapse" data-target="#sqlitereqs" aria-expanded="false" aria-controls="sqlitereqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+					<div class="collapse" id="sqlitereqs">
+					  <div class="well">
+						<p>Understand the basics of Python, as well as the basics of SQL (see the MySQL series if you do not know SQL)</p>
+					  </div>
+					</div>
+				  {%for infos in topics['SQLite']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				  {%endfor%}
+				</div></div>
+			</div></div>
+
+			
+			
+
+
+		  </div>
+
+		</div>
+	</div>
+<!-- END WEB DEV TAB -->		
+	
+	
+	
+<!-- BEGIN DATA ANALYSIS TAB -->		
+    <div role="tabpanel" class="tab-pane fade" id="dataanalysis">
+		<br>
+
+			<div role="tabpanel">
+
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#datamanip" aria-controls="datamanip" role="tab" data-toggle="tab">Data Manipulation</a></li>
+				<li role="presentation"><a href="#dataviz" aria-controls="dataviz" role="tab" data-toggle="tab">Data Visualization</a></li>
+				<li role="presentation"><a href="#machinelearning" aria-controls="machinelearning" role="tab" data-toggle="tab">Machine Learning</a></li>
+				<li role="presentation"><a href="#mpi4py" aria-controls="mpi4py" role="tab" data-toggle="tab">Parallel Computing</a></li>
+				<!--<li role="presentation"><a href="#finance" aria-controls="finance" role="tab" data-toggle="tab">Finance</a></li>-->
+				<li role="presentation"><a href="#nltk" aria-controls="nltk" role="tab" data-toggle="tab">Natural Language Processing (NLTK)</a></li>
+				<li role="presentation"><a href="#dbmysql" aria-controls="dbmysql" role="tab" data-toggle="tab">MySQL Database</a></li>
+				<li role="presentation"><a href="#dbsqlite" aria-controls="dbsqlite" role="tab" data-toggle="tab">SQLite Database</a></li>
+
+			  </ul>
+
+			  
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="datamanip">
+				<br>
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Data Manipulation']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Data Manipulation']}}%;">
+							{{completed_percentages['Data Manipulation']}}%
+						</div>
+					</div>
+					<br>
+					<img class="img-responsive" src="{{ url_for('static', filename='images/3D-Matplotlib.png') }}"/>
+					<p>Arguably, one of the best modules for data manipulation with Python is the Pandas module. You can think of Pandas and use it most often like you would use Excel. The difference is that you can pair the programming-ease of Python, with the speed and efficiency of optimized-in-C code.</p>
+					<br>
+					  <div class="row">
+						  <div class="col-md-5"><div class="list-group">
+						  <p><kbd data-toggle="collapse" data-target="#datamanipreqs" aria-expanded="false" aria-controls="datamanipreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+							<div class="collapse" id="datamanipreqs">
+							  <div class="well">
+								<p>Understand the basics of Python</p>
+							  </div>
+							</div>
+						  {%for infos in topics['Data Manipulation']%}
+							{% if infos[1] in tracking %}
+								<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+							{% else %}
+								<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+							{% endif %}
+						  {%endfor%}
+						</div></div>
+					</div>
+					
+					
+				</div>
+				
+
+				<div role="tabpanel" class="tab-pane fade" id="dataviz">
+				<br>
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Data Visualization']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Data Visualization']}}%;">
+							{{completed_percentages['Data Visualization']}}%
+						</div>
+					</div>
+					<br>
+					<img class="img-responsive" src="{{ url_for('static', filename='images/highly-customized-charts.png') }}"/>
+					<p>One of the oldest and most popular data visualization packages available is <strong><a href="http://matplotlib.org/" target="blank">Matplotlib</a></strong>. Matplotlib can plot both 2D and 3D graphs, as well as live graphs.</p>
+					<br>
+					  <div class="row">
+						  <div class="col-md-5"><div class="list-group">
+						  <p><kbd data-toggle="collapse" data-target="#datavizreqs" aria-expanded="false" aria-controls="datavizreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+							<div class="collapse" id="datavizreqs">
+							  <div class="well">
+								<p>Understand the basics of Python</p>
+							  </div>
+							</div>
+						    {%for infos in topics['Data Visualization']%}
+								{% if infos[1] in tracking %}
+									<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+								{% else %}
+									<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+								{% endif %}
+							{%endfor%}
+						</div></div>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="machinelearning">
+				<br>
+					<div role="tabpanel">
+
+					  <!-- Nav tabs -->
+					  <ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#linearsvc" aria-controls="linearsvc" role="tab" data-toggle="tab">Support Vector Machines (SVM)</a></li>
+						<li role="presentation"><a href="#clustering" aria-controls="clustering" role="tab" data-toggle="tab">Clustering (Unsupervised Learning)</a></li>
+						<li role="presentation"><a href="#patternrec" aria-controls="patternrec" role="tab" data-toggle="tab">Pattern Recognition</a></li>
+					  </ul>
+
+					  <!-- Tab panes -->
+					  <div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active" id="linearsvc">
+						<br>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Support Vector Machines (SVM)']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Support Vector Machines (SVM)']}}%;">
+								{{completed_percentages['Support Vector Machines (SVM)']}}%
+							</div>
+						</div>
+						<br>
+						<img class="img-responsive" src="{{ url_for('static', filename='images/svm/mainsvmimage.png') }}"/>
+						<p>Quite possibly one of the most important sectors of programming today. The most popularly used and referenced machine learning module for Python is <strong><a href="http://scikit-learn.org/" target="blank">Scikit-learn, or SKLearn</a></strong>, which is what we use here.</p><br>
+
+						<div class="row">
+						  <div class="col-md-5"><div class="list-group">
+						  <p><kbd data-toggle="collapse" data-target="#svmreqs" aria-expanded="false" aria-controls="svmreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+							<div class="collapse" id="svmreqs">
+							  <div class="well">
+								<p>Understand the basics of Python, and don't be afraid to ask questions when confused. We also make use of "Pandas," which is covered in the main data analysis tab, though you can likely get by without doing that series. Don't let the term "machine learning" scare you away.</p>
+							  </div>
+							</div>
+						    {%for infos in topics['Support Vector Machines (SVM)']%}
+								{% if infos[1] in tracking %}
+									<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+								{% else %}
+									<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+								{% endif %}
+							{%endfor%}
+						</div></div>
+						</div>
+						
+						</div>
+						<div role="tabpanel" class="tab-pane fade" id="clustering">
+						<br>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Clustering (unsupervised learning)']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Clustering (unsupervised learning)']}}%;">
+								{{completed_percentages['Clustering (unsupervised learning)']}}%
+							</div>
+						</div>
+						<br>
+						<img class="img-responsive" src="{{ url_for('static', filename='images/unsupervised-learning/hierarchcical-clustering-3d-matplotlib-meanshift-tutorial.png') }}"/>
+						<p>Quite possibly one of the most important sectors of programming today. The most popularly used and referenced machine learning module for Python is <strong><a href="http://scikit-learn.org/" target="blank">Scikit-learn, or SKLearn</a></strong>, which is what we use here.</p><br>
+						<div class="row">
+						  <div class="col-md-5"><div class="list-group">
+						  <p><kbd data-toggle="collapse" data-target="#unsupreqs" aria-expanded="false" aria-controls="unsupreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+							<div class="collapse" id="unsupreqs">
+							  <div class="well">
+								<p>Understand the basics of Python, and you should start with Supervised Machine Learning first.</p>
+							  </div>
+							</div>
+						    {%for infos in topics['Clustering (unsupervised learning)']%}
+								{% if infos[1] in tracking %}
+									<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+								{% else %}
+									<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+								{% endif %}
+							{%endfor%}
+						</div></div>
+						</div>
+						
+						</div>
+						<div role="tabpanel" class="tab-pane fade" id="patternrec">
+						<br>
+						<div role="tabpanel">
+
+						  <!-- Nav tabs -->
+						  <ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#imagerecogition" aria-controls="imagerecogition" role="tab" data-toggle="tab">Image Recognition</a></li>
+							<li role="presentation"><a href="#forexalgo" aria-controls="forexalgo" role="tab" data-toggle="tab">Forex Algo HFT</a></li>
+
+						  </ul>
+
+						  <!-- Tab panes -->
+						  <div class="tab-content">
+							<div role="tabpanel" class="tab-pane fade in active" id="imagerecogition">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Image Recognition']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Image Recognition']}}%;">
+										{{completed_percentages['Image Recognition']}}%
+									</div>
+								</div>
+								<br>
+								<p>Using a custom-made pattern recognition algorithm, we are able to have the machine recognize what number it is looking at.</p>
+								<img class="img-responsive" src="{{ url_for('static', filename='images/image-recognition-with-python-tutorial.png') }}"/>
+								 <div class="row">
+								  <div class="col-md-5"><div class="list-group">
+								  <p><kbd data-toggle="collapse" data-target="#imagerecreqs" aria-expanded="false" aria-controls="imagerecreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+									<div class="collapse" id="imagerecreqs">
+									  <div class="well">
+										<p>Understand the basics of Python and you should do just fine. Ask questions if you are feeling confused!</p>
+									  </div>
+									</div>
+									{%for infos in topics['Image Recognition']%}
+										{% if infos[1] in tracking %}
+											<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+										{% else %}
+											<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+										{% endif %}
+									{%endfor%}
+								</div></div>
+								</div>
+							</div>				
+							<div role="tabpanel" class="tab-pane fade" id="forexalgo">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Forex Algo HFT']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Forex Algo HFT']}}%;">
+										{{completed_percentages['Forex Algo HFT']}}%
+									</div>
+								</div>
+								<br>
+							<p>Using Forex GBPUSD tick-data, we create a simple pattern-recognition algorithm for predicting where the markets will go for High Frequency Trading.</p>
+							<img class="img-responsive" src="{{ url_for('static', filename='images/forex-pattern-recognition/machine-learning-algorithmic-trading-example.png') }}" alt="pattern recognition tutorial" />
+							
+							<br>
+							<div class="row">
+								  <div class="col-md-5"><div class="list-group">
+								  <p><kbd data-toggle="collapse" data-target="#forexreqs" aria-expanded="false" aria-controls="forexreqs" style="background-color:#66666">Suggested Requirements for this series</kbd></p>
+									<div class="collapse" id="forexreqs">
+									  <div class="well">
+										<p>Understand the basics of Python and you should do just fine. Ask questions if you are feeling confused!</p>
+									  </div>
+									</div>
+									{%for infos in topics['Forex Algo HFT']%}
+										{% if infos[1] in tracking %}
+											<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+										{% else %}
+											<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+										{% endif %}
+									{%endfor%}
+								</div></div>
+								</div>
+							</div>
+						  </div>
+						</div>
+						</div>
+					  </div>
+					</div>
+				</div>
+				
+				
+				<div role="tabpanel" class="tab-pane fade" id="mpi4py">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Build a Supercomputer and program with MPI']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Build a Supercomputer and program with MPI']}}%;">
+										{{completed_percentages['Build a Supercomputer and program with MPI']}}%
+									</div>
+								</div>
+								<br>
+			<img class="img-responsive" src="{{ url_for('static', filename='images/supercomputer-raspberry-pi-tutorials.jpg') }}"/>
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Build a Supercomputer and program with MPI'][6:]%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+				
+
+			</div></div>
+			</div>
+			</div>
+				
+
+				
+				<div role="tabpanel" class="tab-pane fade" id="nltk">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Natural Language Processing with NLTK']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Natural Language Processing with NLTK']}}%;">
+										{{completed_percentages['Natural Language Processing with NLTK']}}%
+									</div>
+								</div>
+								<br>
+					<img class="img-responsive" src="{{ url_for('static', filename='images/natural-language-processing-with-nltk-and-python.png') }}"/>
+					<p>NLTK with Python is arguably one of the only, if not the only, large scale and open source Natural Language Processing libraries available.</p>
+					<br>
+					  <div class="row">
+						  <div class="col-md-5"><div class="list-group">
+							{%for infos in topics['Natural Language Processing with NLTK']%}
+										{% if infos[1] in tracking %}
+											<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+										{% else %}
+											<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+										{% endif %}
+							{%endfor%}
+						</div></div>
+					</div>
+				</div>
+				
+							<div role="tabpanel" class="tab-pane fade" id="dbmysql">	
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['MySQL']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['MySQL']}}%;">
+					{{completed_percentages['MySQL']}}%
+				</div>
+			</div>
+			<br>
+			  <div class="row">
+				  <div class="col-md-5"><div class="list-group">
+				  {%for infos in topics['MySQL']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				  {%endfor%}
+				</div></div>
+			</div></div>
+			
+			<div role="tabpanel" class="tab-pane fade" id="dbsqlite">	
+			<br>
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['SQLite']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['SQLite']}}%;">
+					{{completed_percentages['SQLite']}}%
+				</div>
+			</div>
+			<br>
+			  <div class="row">
+				  <div class="col-md-5"><div class="list-group">
+				  {%for infos in topics['SQLite']%}
+					{% if infos[1] in tracking %}
+					<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+					{% else %}
+						<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+					{% endif %}
+				  {%endfor%}
+				</div></div>
+			</div></div>
+
+				
+
+				
+				
+			  </div>
+			</div>
+	</div>	
+<!-- END DATA ANALYSIS TAB -->	
+
+
+<!-- BEGIN FINANCE TAB -->
+<div role="tabpanel" class="tab-pane fade" id="finance">
+		<br>
+
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#mlsvm" aria-controls="mlsvm" role="tab" data-toggle="tab">Machine Learning w/ Fundamentals</a></li>
+			<li role="presentation"><a href="#sapandas" aria-controls="sapandas" role="tab" data-toggle="tab">Investing w/ Sentiment</a></li>
+			<li role="presentation"><a href="#fundamentalbasics" aria-controls="fundamentalbasics" role="tab" data-toggle="tab">Python for Fundamental Investing</a></li>
+			<li role="presentation"><a href="#ibpy" aria-controls="ibpy" role="tab" data-toggle="tab">IBpy/Interactive Brokers API</a></li>
+			<li role="presentation"><a href="#montecarloyo" aria-controls="montecarloyo" role="tab" data-toggle="tab">Monte Carlo simulation</a></li>
+			
+
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		  
+		  
+			<div role="tabpanel" class="tab-pane fade in active" id="mlsvm">
+			<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Support Vector Machines (SVM)']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Support Vector Machines (SVM)']}}%;">
+										{{completed_percentages['Support Vector Machines (SVM)']}}%
+									</div>
+								</div>
+								<br>
+			<!--<img class="img-responsive" src="{{ url_for('static', filename='images/raspberry-pi-robot-car.jpg') }}"/>-->
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Support Vector Machines (SVM)']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+
+
+					
+			</div></div>
+			</div>
+		
+			</div>
+			
+			
+			
+			
+			
+			<div role="tabpanel" class="tab-pane fade" id="sapandas">
+			<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Python and Pandas with Sentiment Analysis Database']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Python and Pandas with Sentiment Analysis Database']}}%;">
+										{{completed_percentages['Python and Pandas with Sentiment Analysis Database']}}%
+									</div>
+								</div>
+								<br>
+			<!--<img class="img-responsive" src="{{ url_for('static', filename='images/raspberry-pi-robot-car.jpg') }}"/>-->
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Python and Pandas with Sentiment Analysis Database']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+
+
+					
+			</div></div>
+			</div>
+		
+			</div>
+			
+			
+			
+			<div role="tabpanel" class="tab-pane fade" id="fundamentalbasics">
+			<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Programming for Fundamental Investing']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Programming for Fundamental Investing']}}%;">
+										{{completed_percentages['Programming for Fundamental Investing']}}%
+									</div>
+								</div>
+								<br>
+			<!--<img class="img-responsive" src="{{ url_for('static', filename='images/raspberry-pi-robot-car.jpg') }}"/>-->
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Programming for Fundamental Investing']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+
+
+					
+			</div></div>
+			</div>
+		
+			</div>
+			
+			
+			
+			
+			<div role="tabpanel" class="tab-pane fade" id="ibpy">
+			<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['IBpy']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['IBpy']}}%;">
+										{{completed_percentages['IBpy']}}%
+									</div>
+								</div>
+								<br>
+			<!--<img class="img-responsive" src="{{ url_for('static', filename='images/raspberry-pi-robot-car.jpg') }}"/>-->
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['IBpy']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+
+
+					
+			</div></div>
+			</div>
+		
+			</div>
+			
+			
+			
+			
+			<div role="tabpanel" class="tab-pane fade" id="montecarloyo">
+			<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Creating a Monte Carlo simulator']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Creating a Monte Carlo simulator']}}%;">
+										{{completed_percentages['Creating a Monte Carlo simulator']}}%
+									</div>
+								</div>
+								<br>
+			<!--<img class="img-responsive" src="{{ url_for('static', filename='images/raspberry-pi-robot-car.jpg') }}"/>-->
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Creating a Monte Carlo simulator']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+
+
+					
+			</div></div>
+			</div>
+		
+			</div>
+			
+			
+			
+			
+
+		  </div>
+		</div>
+	</div>
+	
+<!-- END FINANCE TAB -->	
+
+<!-- BEGIN HARDWARE TAB -->	
+    <div role="tabpanel" class="tab-pane fade" id="hardware">
+		<br>
+
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#roboticswithpi" aria-controls="roboticswithpi" role="tab" data-toggle="tab">Robotics w/ Raspberry Pi</a></li>
+			<li role="presentation"><a href="#build-super-computer" aria-controls="build-super-computer" role="tab" data-toggle="tab">Build a Super Computer and Program it with MPI</a></li>
+
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="roboticswithpi">
+			<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Robotics with the Raspberry Pi']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Robotics with the Raspberry Pi']}}%;">
+										{{completed_percentages['Robotics with the Raspberry Pi']}}%
+									</div>
+								</div>
+								<br>
+			<img class="img-responsive" src="{{ url_for('static', filename='images/raspberry-pi-robot-car.jpg') }}"/>
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Robotics with the Raspberry Pi']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+
+
+					
+			</div></div>
+			</div>
+			
+			
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="build-super-computer">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Build a Supercomputer and program with MPI']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Build a Supercomputer and program with MPI']}}%;">
+										{{completed_percentages['Build a Supercomputer and program with MPI']}}%
+									</div>
+								</div>
+								<br>
+			<img class="img-responsive" src="{{ url_for('static', filename='images/supercomputer-raspberry-pi-tutorials.jpg') }}"/>
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Build a Supercomputer and program with MPI']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+				
+
+			</div></div>
+			</div>
+			</div>
+		  </div>
+		</div>
+	</div>
+<!-- END HARDWARE TAB -->	
+
+
+
+<!-- BEGIN GUI TAB -->	
+    <div role="tabpanel" class="tab-pane fade" id="guis">
+		<br>
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#tkinter" aria-controls="tkinter" role="tab" data-toggle="tab">Tkinter</a></li>
+			<li role="presentation"><a href="#kivy2" aria-controls="kivy2" role="tab" data-toggle="tab">Kivy</a></li>
+			<li role="presentation"><a href="#PyQt" aria-controls="PyQt" role="tab" data-toggle="tab">PyQt</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="tkinter">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Tkinter']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Tkinter']}}%;">
+										{{completed_percentages['Tkinter']}}%
+									</div>
+								</div>
+								<br>
+			
+			<img class="img-responsive" src="{{ url_for('static', filename='images/tkinter-gui-tutorial-with-python-3.png') }}"/>
+			<br><br>
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+					{%for infos in topics['Tkinter']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+
+
+					
+			</div></div>
+			</div>
+			
+			
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="kivy2">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['Kivy']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['Kivy']}}%;">
+										{{completed_percentages['Kivy']}}%
+									</div>
+								</div>
+								<br>
+			<img class="img-responsive" src="{{ url_for('static', filename='images/kivy/kivy-draw-application-tutorial.png') }}"/>
+			<p></p>
+			<br><br>
+			
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+
+					{%for infos in topics['Kivy']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}
+				
+
+			</div></div>
+			</div>
+			</div>
+			
+			<div role="tabpanel" class="tab-pane fade" id="PyQt">
+								<br>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="{{completed_percentages['PyQt']}}" aria-valuemin="0" aria-valuemax="100" style="width: {{completed_percentages['PyQt']}}%;">
+										{{completed_percentages['PyQt']}}%
+									</div>
+								</div>
+								<br>
+			<!--<img class="img-responsive" src="{{ url_for('static', filename='images/supercomputer-raspberry-pi-tutorials.jpg') }}"/>-->
+			<p>PyQT series is not here yet, check back soon.</p>
+			<br><br>
+			
+			<div class="row">
+				<div class="col-md-5"><div class="list-group">
+				
+				<!--
+					{%for infos in topics['PyQt']%}
+						{% if infos[1] in tracking %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-ok"></span> {{infos[0]}}</a>
+						{% else %}
+							<a href="{{infos[1]}}" class="list-group-item list-group-item-warning">{{infos[0]}}</a>
+						{% endif %}
+					{%endfor%}-->
+				
+
+			</div></div>
+			</div>
+			</div>
+		  </div>
+		</div>
+	</div>
+<!-- END GUI TAB -->		
+
+	
+	
+  </div>
+
+</div>
+
+</div>
+
+	
+</body>
+{% endblock %}
+

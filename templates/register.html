@@ -1,0 +1,50 @@
+{% extends "header.html" %}
+{% block body %}
+	 <body>
+	  
+		<div class="container">
+		  <h4>Register</h4>
+		  <br>
+		  <!--
+		  <form action="" method="post">
+			<input type="text" placeholder="Username" name="username" value="{{
+			  request.form.username }}"> <br><br>
+			  
+			 <input type="password" placeholder="Password" name="password" value="{{
+			  request.form.password }}"> <br><br>
+			  
+			 <input type="Re-type your password" placeholder="Password Again" name="password2" value="{{
+			  request.form.password2 }}"> <br><br>
+			  
+			 <input type="email" placeholder="Email" name="email" value="{{
+			  request.form.email }}"> <br><br>
+			 
+			<p>By clicking the register button, you agree to our <a href="/about/tos">Terms of Use</a> and <a href="/about/privacy-policy">Privacy Notice (updated Jan 10, 2015)</a></p>
+			<input class="btn btn-default" type="submit" value="Register">
+		  </form>-->
+		  
+		  
+		  {% from "_formhelpers.html" import render_field %}
+			<form method=post action="/register/">
+			  <dl>
+				{{ render_field(form.username) }}
+				{{ render_field(form.email) }}
+				{{ render_field(form.password) }}
+				{{ render_field(form.confirm) }}
+				{{ render_field(form.accept_tos) }}
+			  </dl>
+			  <p><input type=submit value=Register>
+			</form>
+		  {% if error %}
+			<p class="error"><strong>Error:</strong> {{ error }}</p>
+		  {% endif %}
+		<div class="container">
+		   <br>
+			{% for paragraph in Body_info %}
+			<p>{{ paragraph }}</p>
+			{% endfor %}
+		  </div>
+		</div>
+
+	 </body>
+{% endblock %}

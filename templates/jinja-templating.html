@@ -1,0 +1,48 @@
+{% extends "header.html" %}
+{% block body %}
+<body class="body">
+      <div class="container">
+		 {% for d in data %}
+			<p>{{d}}</p>
+		 {% endfor %}
+		 <hr>
+		 {% if data[1]|int > 10 %}
+			<p>True!</p>
+		 {% endif %}
+		 <p>{{data[2]|replace('good','FREAKIN AWESOME!')}}</p>
+		 
+		 <hr>
+		 <ul>
+		 {% for lang in data[3].split(',') %}
+			<li>{{lang}}</li>
+		 {% endfor %}
+		 </ul>
+		 <hr>
+		 
+		 {{data[4]|safe}}
+		 
+		 <h4>
+		 
+		 {% macro input(name, value='', type='text', size=20) -%}
+			<input type="{{ type }}" name="{{ name }}" value="{{
+				value|e }}" size="{{ size }}">
+		{%- endmacro %}
+		
+		<p>{{ input('username') }}</p>
+		<p>{{ input('password', type='password') }}</p>
+		 
+		 
+		 
+		 
+      </div>
+</body>
+{% endblock %}
+
+
+
+
+
+
+
+
+
