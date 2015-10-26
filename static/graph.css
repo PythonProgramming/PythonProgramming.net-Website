@@ -1,0 +1,54 @@
+* {
+    margin: 20;
+    padding: 100;
+}
+header {
+    background-color:rgba(33, 33, 33, 0.9);
+    color:#ffffff;
+    display:block;
+    font: 14px/1.3 Arial,sans-serif;
+    height:50px;
+    position:relative;
+}
+header h2{
+    font-size: 22px;
+    margin: 0px auto;
+    padding: 10px 0;
+    width: 80%;
+    text-align: center;
+}
+header a, a:visited {
+    text-decoration:none;
+    color:#fcfcfc;
+}
+body {
+    background:url("background.jpg") no-repeat scroll top center transparent;
+}
+.actions, .chart {
+    margin: 15px auto;
+    width: 34px;
+}
+button {
+    background: none repeat scroll 0 0 #E3E3E3;
+    border: 1px solid #BBBBBB;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 1px 1px #F6F6F6 inset;
+    color: #333333;
+    font: bold 12px;
+    margin: 0 5px;
+    padding: 8px 0 9px;
+    text-align: center;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 150px;
+}
+button:hover {
+    background: none repeat scroll 0 0 #D9D9D9;
+    box-shadow: 0 0 1px 1px #EAEAEA inset;
+    color: #222222;
+    cursor: pointer;
+}
+button:active {
+    background: none repeat scroll 0 0 #D0D0D0;
+    box-shadow: 0 0 1px 1px #E3E3E3 inset;
+    color: #000000;
+}
